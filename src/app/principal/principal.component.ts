@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { miHttp } from '../mihttp.service';
-
+import { PersonasService } from '../personas.service';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -8,12 +7,22 @@ import { miHttp } from '../mihttp.service';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor(private http: miHttp) { }
+  public listadoPersonas: Array<any>;
+  public servicePersonas: PersonasService;
+  constructor(personasListado: PersonasService) {
+    this.servicePersonas = personasListado;
+   }
 
   ngOnInit() {
+    this.servicePersonas.listar()
+    .then(datos=>{
+      console.info(datos);
+      this.listadoPersonas = datos;
+    })
   }
-  traerTodos(){
-  	console.log(miHttp.httpGetP('lista'));
 
+  public agregarUno(){
+    this.servicePersonas.agregar();
   }
+
 }

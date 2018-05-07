@@ -1,7 +1,7 @@
 import { log } from 'util';
 import { Injectable } from '@angular/core';
 
-import { Http, Response, RequestOptions, Headers } from '@angular/http';
+import { Http, Response,Headers,RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
@@ -9,44 +9,35 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class MiHttpService {
 
-  constructor( public http: Http ) { }
-  api = "localhost/parcial/index.php/";
-  headers = new Headers();
-  headers.append('Content-Type', 'application/json');
+export class unHttpservice {
+
+  api = "http://localhost/parcial/index.php/personas/";
+  cabecera = new Headers();
+  
+  constructor( public http: Http ) {
+    this.cabecera.append('Content-Type','application/x-www-form-urlencoded' );
+   }
 
   public httpGetP ( url: string)
   {
     return this.http
-    .get( url )
+    .get( this.api +url )
     .toPromise()
     .then( this.extractData )
     .catch( this.handleError );
   }
 
-  public httpPostP( url: string, objeto: any )
-  {
+  
+  public httpPostData( url: string , data:any ){
+    let params = "json="+data;
+    let options = new RequestOptions({ headers: this.cabecera});
     return this.http
-    .get( url )
-    .subscribe( data => {
-      console.log( data );
-      return data;
-    });
-  }
-
-   public httpPostData( url: string , data:any ){
-    
-    let options = new RequestOptions({ headers: this.headers });
-    return this.http
-      .post( this.api + url, data, options)
+      .post( this.api + url, params, options)
       .toPromise()
       .then( this.extractData )
       .catch( this.handleError )
   }
-
-
-
 
 
   public httpGetO ( url: string): Observable<Response>
