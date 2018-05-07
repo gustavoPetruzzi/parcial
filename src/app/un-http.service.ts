@@ -16,7 +16,7 @@ export class unHttpservice {
   cabecera = new Headers();
   
   constructor( public http: Http ) {
-    this.cabecera.append('Content-Type','application/x-www-form-urlencoded' );
+    this.cabecera.append('Content-Type','application/x-www-form-urlencoded;charset=utf-8' );
    }
 
   public httpGetP ( url: string)
@@ -30,10 +30,11 @@ export class unHttpservice {
 
   
   public httpPostData( url: string , data:any ){
-    let params = "json="+data;
+    let params = {'title': 'foo',  'body': 'bar', 'userId': 1'};
+    let params = {'nombre': 'gustavo', 'mail': 'gustavo@gmail.com', 'sexo': 'm', 'password':'1161'};
     let options = new RequestOptions({ headers: this.cabecera});
     return this.http
-      .post( "http://httpbin.org/post", params, options)
+      .post( this.api + url, params)
       .toPromise()
       .then( this.extractData )
       .catch( this.handleError )
