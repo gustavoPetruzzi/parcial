@@ -14,7 +14,7 @@ export class MiHttpService {
   constructor( public http: Http ) { }
   api = "localhost/parcial/index.php/";
   headers = new Headers();
-  headers.append("Content-type", "application/json");
+  headers.append('Content-Type', 'application/json');
 
   public httpGetP ( url: string)
   {
