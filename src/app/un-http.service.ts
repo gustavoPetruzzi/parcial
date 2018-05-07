@@ -33,7 +33,7 @@ export class unHttpservice {
     let params = "json="+data;
     let options = new RequestOptions({ headers: this.cabecera});
     return this.http
-      .post( this.api + url, params, options)
+      .post( "http://httpbin.org/post", params, options)
       .toPromise()
       .then( this.extractData )
       .catch( this.handleError )
